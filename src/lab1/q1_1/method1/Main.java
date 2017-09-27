@@ -12,6 +12,10 @@ public class Main {
 
     public static void init() {
         numberAppearanceTimes = new int[10];
+
+        for(int i=0;i<10;i++) {
+            numberAppearanceTimes[i] = 0;
+        }
     }
 
     public static void countNumber(int number) {
@@ -28,13 +32,19 @@ public class Main {
         }
     }
 
+    public static void testPrint() {
+        for(int i =0;i<10;i++) {
+            System.out.println(String.format("[%d] : %d", i, numberAppearanceTimes[i]));
+        }
+    }
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
         int pagesTotal = scanner.nextInt();
 
-        long t1 = System.currentTimeMillis();
+//        long t1 = System.currentTimeMillis();
 
         init();
 
@@ -43,10 +53,12 @@ public class Main {
             pagesTotal--;
         }
 
-        print();
+//        print();
+
+        testPrint();
 
         long t2 = System.currentTimeMillis();
 
-        System.out.println(t2 - t1);
+//        System.out.println(t2 - t1);
     }
 }
