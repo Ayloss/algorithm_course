@@ -64,6 +64,7 @@ public class Main {
             for (int i = beginNum; i < firstNumber; i++) {
                 numberAppearanceTimes[i] += currentLevel;
 
+                // 计算(a-1)99-(a-1)00
                 if(i != 0) {
                     count(currentLevel - 1, beginLevel, currentLevel / 10);
                 }
