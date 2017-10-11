@@ -3,6 +3,9 @@ package lab2.q2_1;
 import java.util.Scanner;
 
 /**
+ * 最笨的办法。遇到一个新的数就加入列表，遇到已经出现的数就增加其次数。
+ * 改进方案可以实现一个哈希表，利用哈希表来检查数据。
+ *
  * Created by status200 on 2017/10/11.
  */
 public class Main {
