@@ -6,7 +6,7 @@ package lab1.q1_3.method2;
 public class Main {
 
     // 需要的素数表中最大的数
-    public static int maxPrime = 100000;
+    public static int maxPrime = 65536;
 
     // 素数表
     public static long[] primes;
@@ -48,6 +48,11 @@ public class Main {
                 primeNum++;
             }
         }
+    }
+
+    public static void iterate(int curPrime, int curVal, int curDivsorNum) {
+
+
     }
 
     public static void main(String[] args) {
