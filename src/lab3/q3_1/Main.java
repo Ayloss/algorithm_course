@@ -3,6 +3,9 @@ package lab3.q3_1;
 import java.util.Scanner;
 
 /**
+ * 方法类似于矩阵连乘。但需要注意的是，该问题中说是“圆形操场”，石头连成一个环。
+ * 因此必须对以每个元素开头的情况进行计算，再得出最大值。
+ *
  * Created by status200 on 2017/10/24.
  */
 public class Main {
@@ -148,6 +151,7 @@ public class Main {
 
         int min = parseMin(stones, n);
         int max = parseMax(stones, n);
+        // 改变为以k开头，长度为n
         for (int beginPos = 2; beginPos <= n; beginPos++) {
 
             // 交换数组，改变其开头
