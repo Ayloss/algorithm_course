@@ -3,6 +3,9 @@ package lab4.q3_5;
 import java.util.Scanner;
 
 /**
+ * 矩阵连乘问题的变体。
+ * 利用三维数组记录等于每个值的方式数。
+ *
  * Created by status200 on 2017/11/9.
  */
 public class Main {
@@ -48,17 +51,28 @@ public class Main {
                 // 分割的位置
                 for(int divPos = beginPos;divPos < beginPos + bracketWidth;divPos++) {
 
-                    //
-                    A[i][j][val('a')] += A[i][divPos][val('c')] * A[divPos+1][j][val('a')]
+                    A[i][j][val('a')] +=
+                            // ca=a
+                            A[i][divPos][val('c')] * A[divPos+1][j][val('a')]
+                            // ac=a
                             + A[i][divPos][val('a')] * A[divPos+1][j][val('c')]
+                            // bc=a
                             + A[i][divPos][val('b')] * A[divPos+1][j][val('c')];
 
-                    A[i][j][val('b')] += A[i][divPos][val('a')] * A[divPos+1][j][val('a')]
+                    A[i][j][val('b')] +=
+                            // aa=b
+                            A[i][divPos][val('a')] * A[divPos+1][j][val('a')]
+                            // ab=b
                             + A[i][divPos][val('a')] * A[divPos+1][j][val('b')]
+                            // bb=b
                             + A[i][divPos][val('b')] * A[divPos+1][j][val('b')];
 
-                    A[i][j][val('c')] += A[i][divPos][val('b')] * A[divPos+1][j][val('a')]
+                    A[i][j][val('c')] +=
+                            // ba=c
+                            A[i][divPos][val('b')] * A[divPos+1][j][val('a')]
+                            // cb=c
                             + A[i][divPos][val('c')] * A[divPos+1][j][val('b')]
+                            // cc=c
                             + A[i][divPos][val('c')] * A[divPos+1][j][val('c')];
                 }
             }
