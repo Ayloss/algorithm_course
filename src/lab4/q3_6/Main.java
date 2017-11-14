@@ -13,7 +13,7 @@ public class Main {
 
     public static int rentShip(int n) {
 
-        // 距离
+        // 距离+
         for (int distance = 2; distance <= n - 1; distance++) {
 
             // 开始站
