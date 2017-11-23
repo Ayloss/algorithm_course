@@ -1,98 +1,53 @@
 package lab5.q4_1;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /**
+ * 巧妙的思路。
+ * 不考虑究竟每个活动安排哪个会场，只考虑当前需不需要增加新的会场。
+ * 对所有时间（开始或者结束）从小到大排序。
+ * 扫描所有时间，当时间为开始时间，则增加一个会场。当时间为结束时间，则减少一个会场。
+ * 记录这个过程中的最大会场数。
+ *
  * Created by status200 on 2017/11/22.
  */
 public class Main2 {
 
-    // 每个节点使用的颜色
-    public static int C[];
-
-    // 已经使用过的颜色
-    public static int colorStack[];
-
-    // 使用的颜色种数
-    public static int colorNum;
-
-    // 活动开始时间
-    public static int startTime[];
-
-    // 活动结束时间
-    public static int endTime[];
-
-    public static boolean isConnected(int i,int j) {
-        int start = startTime[i];
-        int end = endTime[i];
-
-        return (start >= startTime[j] && start <= endTime[j])
-                || (end >= startTime[j] && end <= endTime[j]);
+    // 活动的时间
+    // 既包含开始时间，也包含结束时间
+    public static class ActivityTime {
+        public int time;// 时间
+        public int type;// 时间的类型 1表示开始 -1表示结束
     }
 
-    public static boolean isVisited(int i) {
-        return C[i] > 0;
-    }
-
-    // 标识某种颜色不可用
-    // colorUsable表示每种颜色是否可用,color为要划去的颜色
-    public static void markColorUnusable(boolean[] colorUsable,int color) {
-
-        for(int i =0;i<colorNum;i++) {
-            if(colorStack[i] == color) {
-                colorUsable[i] = false;
-                break;
-            }
-        }
-    }
-
-    // 获取当前可用的第一种颜色
-    public static int getFirstAvailableColor(boolean[] colorUsable) {
-        for(int i=0;i<colorNum;i++) {
-            if(colorUsable[i]) {
-                return colorStack[i];
-            }
-        }
-
-        return 0;
-    }
+    // 活动的时间
+    public static ActivityTime[] activityTimes;
 
     public static int mColor(int n) {
+        // 某个时间段需要的会场数
+        int roomNum = 0;
+        // 需要的会场的最大数量
+        int roomMax = 0;
 
-        // 先给第一个节点涂色
-        C[0] = 1;
-        colorStack[0] = 1;
-        colorNum = 1;
+        // 对活动时间进行排序,不区分开始与结束时间
+        Arrays.sort(activityTimes, Comparator.comparingInt(e -> e.time));
 
+        // 扫描全部时间
+        for (int i = 0; i < n * 2; i++) {
 
-        for (int i = 1; i < n; i++) {
+            // 如果是开始的时间,会场数加一
+            // 如果是结束的时间,会场数减一
+            roomNum += activityTimes[i].type;
 
-            // 表示每种颜色是否可用
-            boolean[] colorUsable = new boolean[colorNum];
-
-            for(int k = 0;k<colorNum;k++) {
-                colorUsable[k] = true;
-            }
-
-            for (int j = 0; j < n; j++) {
-                if (isConnected(i, j) && isVisited(j)) {
-                    int c = C[j];
-                    markColorUnusable(colorUsable,c);
-                }
-            }
-
-            int firstColor = getFirstAvailableColor(colorUsable);
-
-            if (firstColor <= 0) {
-                colorNum++;
-                colorStack[colorNum - 1] = colorNum;
-                C[i] = colorNum;
-            } else {
-                C[i] = firstColor;
+            // 每次计算都记录是否为最多的会场数
+            if(roomNum > roomMax) {
+                roomMax = roomNum;
             }
         }
 
-        return colorNum;
+        return roomMax;
     }
 
     public static void main(String[] args) {
@@ -100,12 +55,12 @@ public class Main2 {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
 
-        startTime = new int[n];
-        endTime = new int[n];
+        activityTimes = new ActivityTime[2 * n];
 
-        for (int i = 0; i < n; i++) {
-            startTime[i] = scanner.nextInt();
-            endTime[i] = scanner.nextInt();
+        for (int i = 0; i < 2 * n; i++) {
+            activityTimes[i] = new ActivityTime();
+            activityTimes[i].time = scanner.nextInt();
+            activityTimes[i].type = i % 2 == 0 ? 1 : -1;
         }
 
         System.out.println(mColor(n));
