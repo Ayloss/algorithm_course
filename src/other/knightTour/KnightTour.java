@@ -19,6 +19,10 @@ public class KnightTour {
 
     public static boolean foundPath = false;
 
+    public static int firstPlaceX;
+
+    public static int firstPlaceY;
+
     public static void init() {
 
         board = new int[boardSize][boardSize];
@@ -69,6 +73,19 @@ public class KnightTour {
         return board[x][y] > 0;
     }
 
+    public static boolean isFirstPlaceAround(int x,int y) {
+
+        for (int i = 0; i < 8; i++) {
+            int x1 = x + directionX[i];
+            int y1 = y + directionY[i];
+
+            if (!boundary(x1, y1) && x1 == firstPlaceX && y1 == firstPlaceY) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void move(int x, int y, int step) {
 
         if(foundPath) {
@@ -76,9 +93,13 @@ public class KnightTour {
         }
 
         if (step >= boardSize * boardSize) {
-            board[x][y] = step;
-            printPath();
-            foundPath = true;
+
+            // 判断最后一个点周围是否存在最初的位置
+            if(isFirstPlaceAround(x, y)) { // 注释掉这里可以得到,不回到第一个点的解
+                board[x][y] = step;
+                printPath();
+                foundPath = true;
+            } // 注释掉这里可以得到,不回到第一个点的解
             return;
         }
 
@@ -88,6 +109,7 @@ public class KnightTour {
 
         // 移动到该位置
         board[x][y] = step;
+
         // 寻找下个位置出路最少的方向
         for (int i = 0; i < 8; i++) {
             int x1 = x + directionX[i];
@@ -130,7 +152,11 @@ public class KnightTour {
 
         init();
 
-        move(4, 5, 1);
+        for (firstPlaceX = 0; firstPlaceX < boardSize; firstPlaceX++) {
+            for (firstPlaceY = 0; firstPlaceY < boardSize; firstPlaceY++) {
+                move(firstPlaceX, firstPlaceY, 1);
+            }
+        }
 
     }
 }
