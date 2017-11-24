@@ -3,6 +3,10 @@ package lab5.q4_1;
 import java.util.Scanner;
 
 /**
+ * 最简单的思路。仿照涂色问题。
+ * 将活动时间的输入转换为图，再依次对每个节点涂色。
+ * 输入样例很大时GG。
+ *
  * Created by status200 on 2017/11/22.
  */
 public class Main {
@@ -51,10 +55,12 @@ public class Main {
         }
     }
 
+    // 图是否联通
     public static boolean isConnected(int i,int j) {
         return G[i][j] == 1;
     }
 
+    // 点是否已经被访问
     public static boolean isVisited(int i) {
         return C[i] > 0;
     }
